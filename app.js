@@ -5,7 +5,7 @@ var cookieSession = require('cookie-session')
 var mongoose = require('mongoose')
 
 var app = express()
-// 测试
+
 app.set('port', process.env.PORT || 3000)
 
 //这里用户登录的账号，直接存到session里了
