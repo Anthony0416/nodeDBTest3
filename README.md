@@ -1,6 +1,3 @@
-丢
-fuck
-蛋疼
 #基于 nodejs 和 mongoDb 的前后端分离开发
 目录结构：
 <pre>
