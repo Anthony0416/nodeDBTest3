@@ -19,8 +19,7 @@ app.use(cookieSession({
 }))
 
 
-var dbUrl = 'mongodb://restHarvey:%rest%Harvey@www.yuxiulive.com/restdata'
-// var dbUrl = 'mongodb://test:test@localhost/restdata'
+var dbUrl = 'mongodb://test:test@localhost/restdata'
 mongoose.connect(dbUrl)
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
