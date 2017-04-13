@@ -31,6 +31,7 @@ var UserSchema = new mongoose.Schema({
   }
 })
 
+//如果子文档在更新时出现错误，将直接报在父类文档中，可以这样处理：
 UserSchema.pre('save', function(next) {
   var user = this
 
@@ -52,7 +53,7 @@ UserSchema.pre('save', function(next) {
     })
   })
 })
-
+// 实例方法，提供公共的方法
 UserSchema.methods = {
   comparePassword: function(_password, cb) {
     bcrypt.compare(_password, this.password, function(err, isMatch) {
@@ -63,7 +64,7 @@ UserSchema.methods = {
   }
 }
 
-
+// 静态方法，在Model层就能使用
 UserSchema.statics = {
   fetch: function(cb) {
     return this

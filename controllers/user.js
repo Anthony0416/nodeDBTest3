@@ -76,7 +76,7 @@ exports.showSignin = function(req,res) {
 				
 				if(isMatch) {
 					req.session.user = user;
-					console.log(121)
+					// console.log(121)
 					res.json({msg: '登陆成功', code: 1})
 				} else {
 					res.json({msg: '密码不正确', code: -1})
@@ -88,6 +88,41 @@ exports.showSignin = function(req,res) {
 	}
 }
 
+// 后台管理界面登录
+exports.adminLogin = function(req,res) {
+	var _user = req.body;
+	var _params = ['name', 'password']
+	var check = Base.checkParams(_user, _params)
+	var name = _user.name;
+	var password = _user.password;
+
+	if(check == 1) {
+		User.findOne({name:name},function(err,user) {
+			if(err) {
+				console.log(err);
+			}
+			
+			if(!user) {
+				res.json({msg: '用户不存在', code: -1})
+				// return res.redirect('/signup');
+			}
+			user.comparePassword(password,function(err,isMatch) {
+				if(err) {
+					console.log(err);
+				}
+				
+				if(isMatch && user.role > 10) {
+					req.session.user = user;
+					res.json({msg: '登陆成功', code: 1})
+				} else {
+					res.json({msg: '密码不正确或权限不够', code: -1})
+				}
+			})
+		})
+	} else {
+		res.json(check)
+	}
+}
 
 exports.logout = function(req,res) {
 	//	delete app.locals.user;

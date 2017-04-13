@@ -3,6 +3,7 @@ var router = express.Router()
 var User = require('../controllers/user')
 var Msgs = require('../controllers/msgs')
 var Base = require('../controllers/base')
+var Details = require('../controllers/details')
 
 var home = [
     { name: 'home', description: '我是首页', price: 12.12},
@@ -25,72 +26,27 @@ router.get('/checkLogin', function(req, res) {
   }
 });
 
-
+// 和用户相关
 // router.get('/reg', checkNotLogin)
 router.post('/reg', User.showSignup)
 
 // router.get('/users', checkNotLogin)
 // router.get('/users', checkLogin)
 router.post('/login', User.showSignin)
+router.post('/adminLogin', User.adminLogin)
 router.get('/users', User.showUsers)
 router.get('/logout',User.logout)
 
-// router.get('/users', function(req, res) {
-//   Users.get(null, function(err, posts) {
-//         if (err) {
-//             posts = [];
-//         }
-//         // console.log(posts)
-//         res.json(posts)
-//     });
-// });
-
-// router.post('/adduser', function(req, res) {
-//     //这里 req.body 需要使用 body-parser 模块才能获取到数据
-//     // console.log(req.body)
-//     res.send(
-//       {msg: req.body.msg}
-//     )
-//     var newUser = new Users({
-//         msg: req.body.msg,
-//     });
-//     newUser.save(function(err, posts) {
-//         if (err) {
-//             posts = [];
-//         }
-//         console.log(posts)
-//         res.json(posts)
-//     });
-// });
+// 和留言相关
 router.get('/msgs', Msgs.showMsgs)
-// router.get('/msgs', function(req, res) {
-//   Msgs.get(null, function(err, msgs) {
-//     if (err) {
-//         msgs = [];
-//     }
-//     // console.log(msgs)
-//     res.json(msgs)
-//   });
-// });
 router.post('/addmsg', Msgs.addMsgs)
-// router.post('/addmsg', function(req, res) {
-//     var _params = ['msg']
-//     var check = Base.checkParams(req.body, _params)
 
-//     if(check) {
-//       var newMsg = new Msgs(req.body.msg, req.body.time, req.body.action);
-//       newMsg.save(function(err, msgs) {
-//           if (err) {
-//               msgs = [];
-//           }
-//           // console.log(msgs)
-//           res.json(msgs)
-//       });
-//     } else {
-//       res.json({msg: '传递参数错误', code: -1})
-//     }
-// });
-
+// 和图文详情相关
+router.post('/upDetails', Details.upDetails)
+router.get('/getLists', Details.getLists)
+router.get('/getHots', Details.getHots)
+router.get('/getDetails', Details.getDetails)
+router.post('/updateDetails', Details.updateDetails)
 
 function checkLogin(req, res, next) {
     if (!req.session.user) {
